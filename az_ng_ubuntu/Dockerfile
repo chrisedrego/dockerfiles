@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+LABEL maintainer="chrisedrego@gmail.com"
+
 RUN apt-get update && apt-get install apt-transport-https -y 
 RUN apt-get install curl -y
 RUN apt-get install gnupg -y
