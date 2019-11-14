@@ -17,6 +17,7 @@ RUN apt-get update
 RUN apt-get install -y kubectl
 
 # RUN chmod +x /usr/local/bin/dockerd-entrypoint.sh
+RUN mkdir -p $HOME/.kube
 COPY entrypoint.sh .
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]
