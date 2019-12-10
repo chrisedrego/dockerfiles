@@ -1,0 +1,4 @@
+asyncio_throttle
+aiohttp
+requests
+mysql-connector
