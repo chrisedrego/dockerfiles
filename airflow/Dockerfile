@@ -31,6 +31,7 @@ RUN set -ex \
         libssl-dev \
         libffi-dev \
         libpq-dev \
+        libpq5 \
     ' \
     && apt-get update -yqq \
     && apt-get upgrade -yqq \
@@ -52,7 +53,6 @@ RUN set -ex \
     && pip install pytz \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient && pip install psycopg2 \
-    && pip install libpq5 \
     && pip install psycopg2-binary \
     && pip install pyasn1 \
     && pip install apache-airflow[crypto,celery,hive,jdbc,mysql,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
@@ -68,7 +68,8 @@ RUN set -ex \
         /var/tmp/* \
         /usr/share/man \
         /usr/share/doc \
-        /usr/share/doc-base
+        /usr/share/doc-base \
+    && rm -rf /usr/local/lib/python3.7/site-packages/airflow/example_dags/example_http_operator.py
 # Install all the dependencies and removing the cache or temp
 
 COPY script/entrypoint.sh /entrypoint.sh
