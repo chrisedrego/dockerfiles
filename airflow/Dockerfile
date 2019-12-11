@@ -51,9 +51,12 @@ RUN set -ex \
     && pip install -U pip setuptools wheel \
     && pip install pytz \
     && pip install pyOpenSSL \
-    && pip install ndg-httpsclient \
+    && pip install ndg-httpsclient && pip install psycopg2 \
+    && pip install libpq5 \
+    && pip install psycopg2-binary \
     && pip install pyasn1 \
-    && pip install apache-airflow[crypto,celery,postgres,hive,jdbc,mysql,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
+    && pip install apache-airflow[crypto,celery,hive,jdbc,mysql,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
+    && pip install apache-airflow[kubernetes] \
     && pip install 'redis>=2.10.5,<3' \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \
     && apt-get purge --auto-remove -yqq $buildDeps \
@@ -69,8 +72,8 @@ RUN set -ex \
 # Install all the dependencies and removing the cache or temp
 
 COPY script/entrypoint.sh /entrypoint.sh
-COPY config/airflow.cfg ${AIRFLOW_HOME}/usr/local/airflow.cfg
+COPY config.d/airflow.cfg ${AIRFLOW_HOME}/usr/local/airflow.cfg
 
 WORKDIR ${AIRFLOW_HOME}
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["webserver"]
+# ENTRYPOINT ["/entrypoint.sh"]
+# CMD ["webserver"]
