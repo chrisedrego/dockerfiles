@@ -74,7 +74,7 @@ RUN set -ex \
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config.d/airflow.cfg ${AIRFLOW_HOME}/usr/local/airflow.cfg
-
+RUN mkdir -p /usr/local/airflow/dags && mkdir -p /usr/local/airflow/logs
 WORKDIR ${AIRFLOW_HOME}
 # ENTRYPOINT ["/entrypoint.sh"]
 # CMD ["webserver"]
