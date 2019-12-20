@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prome
+  namespace: monitor
+  labels:
+    app: prome
+  annotations:
+    monitoring: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prome
+  template:
+    metadata:
+      labels:
+        app: prome
+    spec:
+      containers:
+      - image: chrisedrego/prometheus
+        name: prome
+        ports:
+        - containerPort: 9090
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests: 
+            memory: "1Gi"
+            cpu: "500m"
