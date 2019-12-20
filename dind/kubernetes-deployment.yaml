@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dind-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dind
+  template:
+    metadata:
+      labels:
+        app: dind
+    spec:
+      containers:
+      - name: dind-container
+        image: chrisedrego/node_yarn_k8s_dind
+        imagePullPolicy: Always
+      securityContext:
+        runAsUser: 0
+        privileged: true
+
