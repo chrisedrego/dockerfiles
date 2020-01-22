@@ -5,6 +5,7 @@ RUN wget https://github.com/prometheus/prometheus/releases/download/v2.15.0-rc.0
 RUN chmod +x /prom/prometheus && ln ./prom/prometheus /usr/bin/
 COPY prometheus.yml ./prom
 EXPOSE 9090
+EXPOSE 9091
 WORKDIR /prom
 ENTRYPOINT [ "/usr/bin/prometheus" ]
 CMD        [ "--config.file=prometheus.yml", \
