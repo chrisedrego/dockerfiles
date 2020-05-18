@@ -1,0 +1,33 @@
+name: Building Incredible Docker Files
+
+on:
+  push:
+    branches:
+      - "master"
+
+env:
+  CI: false
+  REGISTRY_ORG: deepintentorg
+
+jobs:
+  build_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build + Push Image
+        shell: bash
+        env:
+          REGISTRY: chrisedrego
+          IMAGENAME: redis
+          TAGNAME: "stable"
+          USERNAME: chrisedrego
+        run: |
+          echo ::set-env name=BRANCH::"$(git rev-parse --abbrev-ref HEAD)"
+          echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+          docker login -u ${USERNAME} -p ${{ secrets.CI_REGISTRY_PASSWORD }}
+          cd ./redis/   
+          docker build --pull -t ${REGISTRY}/${IMAGENAME}:${TAGNAME} -t ${REGISTRY}/${IMAGENAME} . 
+          docker push ${REGISTRY}/${IMAGENAME}:${TAGNAME} && docker push ${REGISTRY}/${IMAGENAME}:${TAGNAME} 
+          docker images
