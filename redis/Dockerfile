@@ -1,6 +1,7 @@
 FROM ubuntu
 # Installing the Dependencies
-RUN apt-get update && apt-get install -y build-essential pkg-config tcl8.5 wget && \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y build-essential pkg-config make wget && \
+    apt-get install -y tcl8.5 && \
     cd /tmp && wget http://download.redis.io/releases/redis-stable.tar.gz && tar xzf redis-stable.tar.gz && cd redis-stable && \
     make && make test || echo "Adding Failback" && make install || echo "Adding Failback"
 RUN cp /tmp/redis-stable/src/redis-server /tmp/redis-stable/src/redis-cli  /usr/local/bin && \
