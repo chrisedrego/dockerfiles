@@ -1,5 +1,5 @@
 FROM ubuntu
-# Installing the Dependencies
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get upgrade -y && apt-get install -y build-essential pkg-config make wget && \
     apt-get install -y tcl8.5 && \
     cd /tmp && wget http://download.redis.io/releases/redis-stable.tar.gz && tar xzf redis-stable.tar.gz && cd redis-stable && \
