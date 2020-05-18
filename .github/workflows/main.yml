@@ -7,7 +7,6 @@ on:
 
 env:
   CI: false
-  REGISTRY_ORG: deepintentorg
 
 jobs:
   build_deploy:
